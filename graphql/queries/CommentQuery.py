@@ -1,9 +1,12 @@
 import strawberry
 from entities.Comment import Comment
-from dao.CommentStorage import getCommentById
+from dao.daoInterface.CommentInterface import CommentInterface
+import setting
 
+commentDao : CommentInterface = setting.commentDao
 @strawberry.type
 class CommentQuery:
+
     @strawberry.field
     def comment(self, id: str) -> Comment:
-        return getCommentById(id)
+        return commentDao.getCommentById(id)

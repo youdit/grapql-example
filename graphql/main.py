@@ -3,14 +3,23 @@ from fastapi import FastAPI
 from strawberry.asgi import GraphQL
 import strawberry
 
-from entities.Author import Author
-from queries.UserQuery import UserQuery
-from queries.BookQuery import BookQuery
-from queries.CommentQuery import CommentQuery
+import setting
+from dao.daoInMemImpl.AuthorStorage import AuthorStorage
+from dao.daoInMemImpl.CommentStorage import CommentStorage
+from dao.daoInMemImpl.BookStorage import BookStorage
+
+setting.authorDao = AuthorStorage()
+setting.bookDao = BookStorage()
+setting.commentDao = CommentStorage()
+
+
+import queries.AuthorQuery as AuthorQuery
+import queries.BookQuery as BookQuery
+import queries.CommentQuery as CommentQuery
 
 
 @strawberry.type
-class Query(UserQuery, BookQuery, CommentQuery):
+class Query(AuthorQuery.AuthorQuery, BookQuery.BookQuery, CommentQuery.CommentQuery):
     pass
 
 schema  = strawberry.Schema(query=Query)

@@ -1,9 +1,11 @@
 import strawberry
 from entities.Book import Book
-from dao.BookStorage import getById
+from dao.daoInterface.BookInterface import BookInterface
+import setting
 
-@strawberry.type
+bookDao: BookInterface = setting.bookDao
 class BookQuery:
+
     @strawberry.field
     def book(self, id: str) -> Book:
-        return getById(id)
+        return bookDao.getById(id)

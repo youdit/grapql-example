@@ -1,6 +1,11 @@
 import strawberry
 from typing import Union, TYPE_CHECKING, List
 
+import setting
+
+
+commentDao  = None
+authorDao  = None
 
 if TYPE_CHECKING:
     from entities.Author import Author
@@ -15,11 +20,9 @@ class Book:
 
     @strawberry.field
     def author(self) -> strawberry.LazyType["Author", "entities.Author"]:
-        from dao.AuthorStorage import findAuthorByName
-        return findAuthorByName(self.authorName)
+        return setting.authorDao.findAuthorByName(self.authorName)
 
     @strawberry.field
     def comment(self) -> List[strawberry.LazyType["Comment", "entities.Comment"]]:
-        from dao.CommentStorage import getCommentFormBookId
-        return getCommentFormBookId(self.id)
+        return setting.commentDao.getCommentFormBookId(self.id)
 

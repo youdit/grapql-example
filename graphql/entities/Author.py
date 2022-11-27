@@ -1,6 +1,9 @@
 import strawberry
 from typing import Union, List, TYPE_CHECKING
 
+import setting
+
+
 if TYPE_CHECKING:
     from entities.Book import Book
     
@@ -12,11 +15,6 @@ class Author:
     age: int
 
     @strawberry.field
-    def book(self) -> List[strawberry.LazyType["Book", "entities.Book"]]:
-        from dao.BookStorage import getBookByAuthor
-        return getBookByAuthor(self.name)
+    def book(self, id: Union[str,None] = None) -> List[strawberry.LazyType["Book", "entities.Book"]]:
+        return setting.bookDao.getBookByAuthorAndId(self.name, id)
 
-    @strawberry.field
-    def book(self, id: str) -> List[strawberry.LazyType["Book", "entities.Book"]]:
-        from dao.BookStorage import getBookByAuthorAndId
-        return getBookByAuthorAndId(self.name, id)

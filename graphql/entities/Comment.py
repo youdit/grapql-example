@@ -1,8 +1,13 @@
 import strawberry
 from typing import Union, TYPE_CHECKING
 
+import setting
+
+bookDao = None
+
 if TYPE_CHECKING:
     from entities.Book import Book
+
 
 @strawberry.type
 class Comment:
@@ -12,5 +17,4 @@ class Comment:
 
     @strawberry.field
     def book(self) -> strawberry.LazyType["Book","entities.Book"]:
-        from dao.BookStorage import getById
-        return getById(self.bookId)
+        return setting.bookDao.getById(self.bookId)
