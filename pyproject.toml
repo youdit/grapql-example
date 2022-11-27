@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "graphql"
+version = "0.1.0"
+description = ""
+authors = ["Udit <udit.singh98@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.87.0"
+strawberry-graphql = {extras = ["debug-server"], version = "^0.142.2"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
